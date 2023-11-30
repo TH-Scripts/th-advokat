@@ -8,9 +8,36 @@ function CreateCase()
         {type = 'input', label = 'Klient navn', description = 'Navnet på klienten', required = true},
         {type = 'textarea', label = 'Beskrivelse', description = 'Lav en kort beskrivelse af sagen', required = true},
         {type = 'checkbox', label = 'Underskriv', required = true},
+        {type = 'date', label = 'Angiv dato', format = 'DD/MM/YYYY', default = true, disabled = true, returnString = true},
     })
 
-    print(input[3])
+    print(input[5])
 
-    TriggerServerEvent('th-advokat:CreateCase', input[1], input[2], input[3], input[4])
+    
+
+    TriggerServerEvent('th-advokat:CreateCase', input[1], input[2], input[3], input[4], input[5])
+end
+
+function GetCases()
+    ESX.TriggerServerCallback('th-advokat:getcases', function(data)
+        options = {}
+        for _,v in pairs(data) do
+            print(v.dato)
+            table.insert(options, {
+                title = 'SagsID: ' ..v.id .. '',
+                description = 'Klient: ' .. v.clientname .. ' beskrivelse: ' .. v.beskrivelse .. ' underskrift: ' .. v.underskrift .. ' Dato: ' .. v.dato .. '',
+                onSelect = function()
+                    print(''..v.id..'')
+                end
+            })
+        end
+
+        lib.registerContext({
+            id = 'sager',
+            title = 'Advokat Sager',
+            options = options,
+        })
+
+        lib.showContext('sager')
+    end)
 end
