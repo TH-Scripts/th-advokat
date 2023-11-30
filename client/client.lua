@@ -1,21 +1,5 @@
 ESX = exports["es_extended"]:getSharedObject()
 
-exports.ox_target:addSphereZone({
-    coords = Config.target,
-    radius = 1,
-    debug = drawZones,
-    options = {
-        {
-            icon = 'fa-solid fa-gavel',
-            label = 'Åben advokat menu',
-            --groups = Config.AdvokatJob,
-            onSelect = function()
-                lib.showContext('advokat_menu')
-            end
-        },
-    }
-})
-
 
 function getPlayers()
     ESX.TriggerServerCallback('th-advokat:getOnlinePlayers', function(players)
