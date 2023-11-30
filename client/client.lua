@@ -9,7 +9,7 @@ function getPlayers()
             if players[i].name ~= GetPlayerName(PlayerId()) then
                 table.insert(elements, {
                     title = 'Borger id: '..players[i].source,
-                    description = 'Fornavn: '..players[i].firstname.. '\n Efternavn '.. players[i].lastname.. "\n Telefonnummer: \n Tryk for at ændre personen's navn",
+                    description = 'Fornavn: '..players[i].firstname.. '\n Efternavn '.. players[i].lastname.. '\n Telefonnummer: '..players[i].phoneNumber.. "\n Tryk for at ændre personen's navn",
                     icon = 'hashtag',
                     onSelect = function()
                         inputDialog()

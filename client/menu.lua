@@ -6,7 +6,6 @@ lib.registerContext({
         title = 'Navnskifte',
         description = "Skift en borger's navn vha. denne handling",
         icon = 'pen-to-square',
-        iconColor = '#2997cf',
         onSelect = function()
           getPlayers()
         end
@@ -15,17 +14,44 @@ lib.registerContext({
         title = 'Køretøjer',
         description = 'Se handlinger vedr. køretøjer for borgere',
         icon = 'car-side',
-        iconColor = '#870c1d',
         onSelect = function()
             print('en menu som viser folks køretøjer, og gør det muligt at fjerne dem.')
         end
       },
       {
-        title = 'Opret ny sag',
-        description = 'Opret en ny sag',
-        onSelect = function()
-          CreateCase()
-        end
+        title = 'Advokat sager',
+        description = 'Se/opret advokat sager',
+        icon = 'folder',
+        menu = 'advokat_sager'
       }
     }
 })
+
+lib.registerContext({
+  id = 'advokat_sager',
+  title = 'Advokat Menu',
+  menu = 'advokat_menu',
+  onBack = function()
+  end,
+  options = {
+    {
+      title = 'Opret sag',
+      description = 'Opret en advokat sag',
+      icon = 'folder',
+      onSelect = function()
+        CreateCase()
+      end
+    },
+    {
+      title = 'Alle sager',
+      description = 'Se en database over alle gemte sager',
+      icon = 'database',
+      onSelect = function()
+        CreateCase()
+      end
+    }
+  }
+})
+
+
+
