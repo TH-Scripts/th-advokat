@@ -7,16 +7,13 @@ ESX.RegisterServerCallback('th-advokat:getOnlinePlayers', function(source, cb)
 	for i=1, #xPlayers, 1 do
 		local xPlayer = ESX.GetPlayerFromId(xPlayers[i])
         if xPlayer.get('firstName') then
-            if Config.LBPhone then
-                table.insert(players, {
-                    source = xPlayer.source,
-                    identifier = xPlayer.identifier,
-                    name = xPlayer.name,
-                    firstname = xPlayer.get('firstName'),
-                    lastname = xPlayer.get('lastName'),
-                    phoneNumber = exports["lb-phone"]:GetEquippedPhoneNumber(source)
-                })
-            end
+            table.insert(players, {
+                source = xPlayer.source,
+                identifier = xPlayer.identifier,
+                name = xPlayer.name,
+                firstname = xPlayer.get('firstName'),
+                lastname = xPlayer.get('lastName')
+            })
         end
 	end
 	cb(players)
@@ -61,4 +58,19 @@ RegisterNetEvent('th-advokat:changeName', function(firstName, lastName)
         icon = 'thumbs-up',
         iconColor = '#0fd12c'
     }))
+end)
+
+RegisterNetEvent('th-advokat:CreateCase', function(id, desc, name, check)
+    print(id)
+    print(desc)
+    print(name)
+    print(check)
+
+    local xPlayer = ESX.GetPlayerFromId(source)
+
+    local name2 = xPlayer.getName()
+
+    MySQL.insert.await('INSERT INTO `advokat_sager` (id, clientname, beskrivelse, underskrift) VALUES (?, ?, ?, ?)', {
+        id, desc, name, name2
+    })
 end)
