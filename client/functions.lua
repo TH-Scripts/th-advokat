@@ -27,7 +27,7 @@ function GetCases()
                 title = 'SagsID: ' ..v.id .. '',
                 description = 'Klient: ' .. v.clientname .. ' beskrivelse: ' .. v.beskrivelse .. ' underskrift: ' .. v.underskrift .. ' Dato: ' .. v.dato .. '',
                 onSelect = function()
-                    print(''..v.id..'')
+                    deletecase(v.id)
                 end
             })
         end
@@ -40,4 +40,27 @@ function GetCases()
 
         lib.showContext('sager')
     end)
+end
+
+function deletecase(id)
+    local alert = lib.alertDialog({
+        header = 'Slet sag',
+        content = 'Ønsker du at slette sagen med id`et ' .. id .. '? Dette kan ikke laves om !',
+        centered = true,
+        cancel = true,
+    })
+
+    if alert == 'confirm' then
+        lib.notify({
+            title = 'Success',
+            description = 'Du slettede sagen med id`et ' .. id .. '',
+            type = 'inform'
+        })
+    else
+        lib.notify({
+            title = 'Annulleret',
+            description = 'Du annullerede sletning af sagen',
+            type = 'warning',
+        })
+    end
 end
