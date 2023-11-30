@@ -18,7 +18,7 @@ exports.ox_target:addSphereZone({
 
 
 function getPlayers()
-    ESX.TriggerServerCallback('huh_advokat:getOnlinePlayers', function(players)
+    ESX.TriggerServerCallback('th-advokat:getOnlinePlayers', function(players)
         local elements = {}
 
         for i=1, #players, 1 do
@@ -69,7 +69,7 @@ function inputDialog()
         local firstName  = input[1]
         local lastName   = input[2]
     
-        TriggerServerEvent('huh_advokat:changeName', firstName, lastName)
+        TriggerServerEvent('th-advokat:changeName', firstName, lastName)
     else
         lib.notify({
             id = 'fortydelse_navn',

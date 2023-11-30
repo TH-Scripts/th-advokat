@@ -1,6 +1,6 @@
 ESX = exports["es_extended"]:getSharedObject()
 
-ESX.RegisterServerCallback('huh_advokat:getOnlinePlayers', function(source, cb)
+ESX.RegisterServerCallback('th-advokat:getOnlinePlayers', function(source, cb)
 	local xPlayers = ESX.GetPlayers()
 	local players = {}
 
@@ -19,7 +19,7 @@ ESX.RegisterServerCallback('huh_advokat:getOnlinePlayers', function(source, cb)
 	cb(players)
 end)
 
-ESX.RegisterServerCallback('huh_advokat:getVehicles', function(source, cb, _source)
+ESX.RegisterServerCallback('th-advokat:getVehicles', function(source, cb, _source)
     local xPlayer = ESX.GetPlayerFromId(_source)
 
     MySQL.Async.fetchAll('SELECT * FROM owned_vehicles WHERE owner = @owner', {
@@ -30,7 +30,7 @@ ESX.RegisterServerCallback('huh_advokat:getVehicles', function(source, cb, _sour
 end)
 
 
-RegisterNetEvent('huh_advokat:changeName', function(firstName, lastName)
+RegisterNetEvent('th-advokat:changeName', function(firstName, lastName)
     local xPlayer = ESX.GetPlayerFromId(source)
 
     MySQL.Async.execute('UPDATE users SET `firstname` = @firstname WHERE identifier = @identifier', {
