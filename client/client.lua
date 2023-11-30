@@ -95,17 +95,16 @@ Citizen.CreateThread(function()
     while true do
         if spawnped == false then
             spawnped = true
-            RequestModel(GetHashKey('a_m_m_afriamer_01'))
-            while not HasModelLoaded(GetHashKey('a_m_m_afriamer_01')) do
+            RequestModel(GetHashKey(Config.PEDModel))
+            while not HasModelLoaded(GetHashKey(Config.PEDModel)) do
                 Wait(1)
             end
   
-            ped1 = CreatePed(4, GetHashKey('a_m_m_afriamer_01'), -1622.4918, -590.9896, 33.4061-1, 42.8284, false, true) -- ændrer disse koordinater
+            ped1 = CreatePed(4, GetHashKey(Config.PEDModel), Config.PEDSpawn, false, true) -- ændrer disse koordinater
             FreezeEntityPosition(ped1, true)
             SetEntityInvincible(ped1, true)
             SetBlockingOfNonTemporaryEvents(ped1, true)
         end
-        print('Seeeehs')
         Citizen.Wait(10000)
     end
 end)
