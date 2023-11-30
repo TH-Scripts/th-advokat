@@ -11,7 +11,7 @@ Config.AdvokatJob = ''
 
 
 Config.Elevators = {
-    Advokat = { -- Elevator name(Doesn't show it's just to name table)
+    Advokat = {
         [1] = {
             coords = vec3(-1579.6760, -561.1122, 108.5229),
             heading = 300.8177,
