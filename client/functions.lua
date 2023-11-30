@@ -17,8 +17,8 @@ end
 function GetCases()
     ESX.TriggerServerCallback('th-advokat:getcases', function(data)
         options = {}
+        options2 = {}
         for _,v in pairs(data) do
-            print(v.dato)
             table.insert(options, {
                 title = 'SagsID: ' ..v.id .. '',
                 description = "FULDE NAVN: \n" .. v.clientname .. '\n\n BESKRIVELSE: \n' .. v.beskrivelse .. '\n\n ADVOKAT: \n' .. v.underskrift .. '\n\n DATO: \n' .. v.dato .. '\n\n Tryk for at ændre sagens indhold',
@@ -39,24 +39,9 @@ function GetCases()
 end
 
 function deletecase(id)
-    local alert = lib.alertDialog({
-        header = 'Slet sag',
-        content = 'Ønsker du at slette sagen med id`et ' .. id .. '? Dette kan ikke laves om !',
-        centered = true,
-        cancel = true,
+    local input = lib.inputDialog("Ændre sagen med id'et ".. id .. "", {
+        {type = 'textarea', label = 'Opdateret tekst', required = true},
     })
 
-    if alert == 'confirm' then
-        lib.notify({
-            title = 'Success',
-            description = 'Du slettede sagen med id`et ' .. id .. '',
-            type = 'inform'
-        })
-    else
-        lib.notify({
-            title = 'Annulleret',
-            description = 'Du annullerede sletning af sagen',
-            type = 'warning',
-        })
-    end
+    TriggerServerEvent('th-advokat:EditCase', input[1], id)
 end
