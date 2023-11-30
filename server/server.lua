@@ -73,7 +73,7 @@ RegisterNetEvent('th-advokat:changeName', function(firstName, lastName)
     }))
 end)
 
-RegisterNetEvent('th-advokat:CreateCase', function(id, desc, name, check)
+RegisterNetEvent('th-advokat:CreateCase', function(id, desc, name, check, date)
     print(id)
     print(desc)
     print(name)
@@ -83,7 +83,12 @@ RegisterNetEvent('th-advokat:CreateCase', function(id, desc, name, check)
 
     local name2 = xPlayer.getName()
 
-    MySQL.insert.await('INSERT INTO `advokat_sager` (id, clientname, beskrivelse, underskrift) VALUES (?, ?, ?, ?)', {
-        id, desc, name, name2
+    MySQL.insert.await('INSERT INTO `advokat_sager` (id, clientname, beskrivelse, underskrift, dato) VALUES (?, ?, ?, ?, ?)', {
+        id, desc, name, name2, date
     })
+end)
+
+ESX.RegisterServerCallback('th-advokat:getcases', function(src, cb) 
+    local table = MySQL.Sync.fetchAll('SELECT id, clientname, beskrivelse, dato, underskrift FROM advokat_sager')
+    cb(table)
 end)

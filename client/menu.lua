@@ -47,7 +47,7 @@ lib.registerContext({
       description = 'Se en database over alle gemte sager',
       icon = 'database',
       onSelect = function()
-        CreateCase()
+        GetCases()
       end
     }
   }
