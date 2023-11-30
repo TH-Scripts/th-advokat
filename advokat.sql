@@ -7,3 +7,13 @@ CREATE TABLE IF NOT EXISTS `advokat_sager` (
 
     PRIMARY KEY(`id`)
 ) ENGINE = InnoDB;
+
+INSERT INTO `job_grades` (job_name, grade, name, label, salary, skin_male, skin_female) VALUES
+	('lawyer',0,'elev','Elev',20),
+	('lawyer',1,'skilled','Fuldmægtig',40),
+	('lawyer',2,'boss','Direktør',60),
+;
+
+INSERT INTO `jobs` (name, label) VALUES
+	('lawyer','Advokat')
+;

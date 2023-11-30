@@ -42,6 +42,18 @@ ESX.RegisterServerCallback('th-advokat:getVehicles', function(source, cb, _sourc
     end)
 end)
 
+RegisterNetEvent('th-advokat:EditCase', function(desc, id)
+    local xPlayer = ESX.GetPlayerFromId(source)
+
+    MySQL.Async.execute('UPDATE advokat_sager SET `beskrivelse` = @desc WHERE id = @id', {
+        ['@desc'] = desc
+    })
+
+    MySQL.Async.execute('UPDATE advokat_sager SET `underskrift` = @underskrift WHERE id = @id', {
+        ['@underskrift'] = xPlayer.getName()
+    })
+end)
+
 
 RegisterNetEvent('th-advokat:changeName', function(firstName, lastName)
     local xPlayer = ESX.GetPlayerFromId(source)
@@ -74,11 +86,6 @@ RegisterNetEvent('th-advokat:changeName', function(firstName, lastName)
 end)
 
 RegisterNetEvent('th-advokat:CreateCase', function(id, desc, name, check, date)
-    print(id)
-    print(desc)
-    print(name)
-    print(check)
-
     local xPlayer = ESX.GetPlayerFromId(source)
 
     local name2 = xPlayer.getName()
