@@ -20,5 +20,12 @@ lib.registerContext({
             print('en menu som viser folks køretøjer, og gør det muligt at fjerne dem.')
         end
       },
+      {
+        title = 'Opret ny sag',
+        description = 'Opret en ny sag',
+        onSelect = function()
+          CreateCase()
+        end
+      }
     }
 })
