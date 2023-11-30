@@ -7,16 +7,29 @@ ESX.RegisterServerCallback('th-advokat:getOnlinePlayers', function(source, cb)
 	for i=1, #xPlayers, 1 do
 		local xPlayer = ESX.GetPlayerFromId(xPlayers[i])
         if xPlayer.get('firstName') then
-            table.insert(players, {
-                source = xPlayer.source,
-                identifier = xPlayer.identifier,
-                name = xPlayer.name,
-                firstname = xPlayer.get('firstName'),
-                lastname = xPlayer.get('lastName')
-            })
+            if Config.LBPhone then
+                table.insert(players, {
+                    source = xPlayer.source,
+                    identifier = xPlayer.identifier,
+                    name = xPlayer.name,
+                    firstname = xPlayer.get('firstName'),
+                    lastname = xPlayer.get('lastName'),
+                    phoneNumber = exports["lb-phone"]:GetEquippedPhoneNumber(source)
+                })
+            end
         end
 	end
 	cb(players)
+end)
+
+RegisterNetEvent('th-advokat:getVehicle', function(playerId)
+    local xPlayer = ESX.GetPlayerFromId(_source)
+
+    MySQL.Async.fetchAll('SELECT * FROM owned_vehicles WHERE owner = @owner', {
+        ['@owner'] = xPlayer.identifier
+    }, function(result)
+        TriggerClientEvent('')
+    end)
 end)
 
 ESX.RegisterServerCallback('th-advokat:getVehicles', function(source, cb, _source)

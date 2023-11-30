@@ -15,7 +15,7 @@ lib.registerContext({
         description = 'Se handlinger vedr. køretøjer for borgere',
         icon = 'car-side',
         onSelect = function()
-            print('en menu som viser folks køretøjer, og gør det muligt at fjerne dem.')
+          inputVehiclePlayerID()
         end
       },
       {
