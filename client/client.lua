@@ -12,7 +12,7 @@ function getPlayers()
                     description = 'Fornavn: '..players[i].firstname.. '\n Efternavn '.. players[i].lastname.. '\n Telefonnummer: '..players[i].phoneNumber.. "\n Tryk for at ændre personen's navn",
                     icon = 'hashtag',
                     onSelect = function()
-                        TriggerEvent('th-advokat:changesSomKanForetages', players)
+                        changesSomKanForetages(players)
                     end
                 })
             end
@@ -29,14 +29,69 @@ function getPlayers()
     end)
 end
 
-AddEventHandler('th-advokat:changesSomKanForetages', function(players)
 
-    print(json.encode(players))
+function changesSomKanForetages(players)
+    lib.registerContext({
+        id = 'player_foretages',
+        title = 'Foretag et valg',
+        options = {
+          {
+            title = 'Skift navn',
+            description = 'Tryk her hvis du ønsker at skifte navn på personen',
+            icon = 'pen-to-square',
+            onSelect = function()
+                navnSkiftDialog()
+            end
+          },
+          {
+            title = 'Køretøjslist',
+            description = 'Tryk her for at få vist køretøjer',
+            icon = 'pen-to-square',
+            onSelect = function()
+                getVehicleMenu()
+            end
+          }
+        }
+      })
+      lib.showContext('player_foretages')
+end
 
-end)
+function getVehicleMenu()
 
 
-function inputDialog()
+    ESX.TriggerServerCallback('th-advokat:getVehicles', function(vehicles) 
+       local elements = {}
+       
+        for i=1, #vehicles, 1 do
+            vehicles[i].vehicle = json.decode(vehicles[i].vehicle)
+            local hashVehicule = vehicles[i].vehicle.model
+            local aheadVehName = GetDisplayNameFromVehicleModel(hashVehicule)
+            local vehicleName = GetLabelText(aheadVehName)
+            if vehicles[i].parked == "1" then
+                table.insert(elements, {
+                    title = vehicleName..' - '..vehicles[i].plate,
+                    description = vehicles[i]
+                })
+            else
+                table.insert(elements, {
+                    title = vehicleName..' - '..vehicles[i].plate,
+                    description = vehicles[i]
+                })
+            end
+        end
+
+        lib.registerContext({
+            id = 'list_vehicles',
+            title = 'Køretøjsliste',
+            options = elements
+        })
+
+        lib.showContext('list_vehicles')
+
+    end)
+end
+
+function navnSkiftDialog()
 
     local alert = lib.alertDialog({
         header = 'Navnskifte',
@@ -59,7 +114,7 @@ function inputDialog()
         local firstName  = input[1]
         local lastName   = input[2]
     
-        TriggerServerEvent('th-advokat:changeName', firstName, lastName)
+        TriggerServerEvent('th-advokat:changeName', firstName, lastName, _source)
     else
         lib.notify({
             id = 'fortydelse_navn',
