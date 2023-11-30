@@ -12,7 +12,7 @@ function getPlayers()
                     description = 'Fornavn: '..players[i].firstname.. '\n Efternavn '.. players[i].lastname.. '\n Telefonnummer: '..players[i].phoneNumber.. "\n Tryk for at ændre personen's navn",
                     icon = 'hashtag',
                     onSelect = function()
-                        inputDialog()
+                        TriggerEvent('th-advokat:changesSomKanForetages', players)
                     end
                 })
             end
@@ -28,6 +28,12 @@ function getPlayers()
 
     end)
 end
+
+AddEventHandler('th-advokat:changesSomKanForetages', function(players)
+
+    print(json.encode(players))
+
+end)
 
 
 function inputDialog()

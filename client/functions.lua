@@ -3,17 +3,13 @@ function callLawyer()
 end
 
 function CreateCase()
-    local input = lib.inputDialog('Opret ny sag', {
-        {type = 'number', label = 'Sags ID', description = 'Angiv et sags id', min = 1, max = 100, required = true},
-        {type = 'input', label = 'Klient navn', description = 'Navnet på klienten', required = true},
-        {type = 'textarea', label = 'Beskrivelse', description = 'Lav en kort beskrivelse af sagen', required = true},
-        {type = 'checkbox', label = 'Underskriv', required = true},
-        {type = 'date', label = 'Angiv dato', format = 'DD/MM/YYYY', default = true, disabled = true, returnString = true},
+    local input = lib.inputDialog('Opret ny sag ', {
+        {type = 'number', icon = 'hashtag', label = 'Sags ID', description = 'Angiv et sags id', placeholder = 'Giv sagen en unikt id', min = 1, max = 100, required = true},
+        {type = 'input',icon = 'file-signature', label = 'Klient navn', placeholder = 'Skriv klientens fulde navn', description = 'Navnet på klienten', required = true},
+        {type = 'textarea', icon = 'comment', label = 'Beskrivelse', placeholder = 'Giv en beskrivelse på max 250 tegn', min = 1, max = 30, description = 'Lav en kort beskrivelse af sagen', required = true},
+        {type = 'checkbox', icon = 'signature', label = 'Underskriv', required = true},
+        {type = 'date', label = 'Angiv dato', icon = 'calendar-days', format = 'DD/MM/YYYY', default = true, disabled = true, returnString = true},
     })
-
-    print(input[5])
-
-    
 
     TriggerServerEvent('th-advokat:CreateCase', input[1], input[2], input[3], input[4], input[5])
 end
@@ -25,7 +21,7 @@ function GetCases()
             print(v.dato)
             table.insert(options, {
                 title = 'SagsID: ' ..v.id .. '',
-                description = 'Klient: ' .. v.clientname .. ' beskrivelse: ' .. v.beskrivelse .. ' underskrift: ' .. v.underskrift .. ' Dato: ' .. v.dato .. '',
+                description = "FULDE NAVN: \n" .. v.clientname .. '\n\n BESKRIVELSE: \n' .. v.beskrivelse .. '\n\n ADVOKAT: \n' .. v.underskrift .. '\n\n DATO: \n' .. v.dato .. '\n\n Tryk for at ændre sagens indhold',
                 onSelect = function()
                     deletecase(v.id)
                 end

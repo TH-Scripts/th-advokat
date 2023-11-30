@@ -3,21 +3,21 @@ lib.registerContext({
     title = 'Advokat Menu',
     options = {
       {
-        title = 'Navnskifte',
-        description = "Skift en borger's navn vha. denne handling",
+        title = 'Liste over borgere',
+        description = "Få en liste over alle de borgere, som befinder sig i byen",
         icon = 'pen-to-square',
         onSelect = function()
           getPlayers()
         end
       },
-      {
-        title = 'Køretøjer',
-        description = 'Se handlinger vedr. køretøjer for borgere',
-        icon = 'car-side',
-        onSelect = function()
-          inputVehiclePlayerID()
-        end
-      },
+      -- {
+      --   title = 'Køretøjer',
+      --   description = 'Se handlinger vedr. køretøjer for borgere',
+      --   icon = 'car-side',
+      --   onSelect = function()
+      --     inputVehiclePlayerID()
+      --   end
+      -- },
       {
         title = 'Advokat sager',
         description = 'Se/opret advokat sager',

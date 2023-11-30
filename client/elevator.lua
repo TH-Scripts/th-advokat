@@ -60,14 +60,6 @@ AddEventHandler('th-advokat:goToFloor', function(data)
 	DoScreenFadeIn(1500)
 end)
 
-AddEventHandler('th-advokat:noAccess', function()
-    lib.notify({
-        title = 'No Access',
-        description = 'You do not have access to this floor',
-        type = 'error'
-    })
-end)
-
 AddEventHandler('th-advokat:openMenu', function(data)
     local elevator = data.elevator
     local floor = data.floor
@@ -80,7 +72,6 @@ AddEventHandler('th-advokat:openMenu', function(data)
                 title = v.title..' (Nuværende)',
                 description = v.description,
                 event = '',
-                --args = { elevator = elevator, floor = k }
             })
         elseif v.groups then
             local found
