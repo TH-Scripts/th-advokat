@@ -29,3 +29,10 @@ exports.ox_target:addSphereZone({
         },
     }
 })
+
+exports.ox_target:addGlobalPlayer({
+    label = 'Giv faktura',
+    onSelect = function()
+        givebill()
+    end
+})
