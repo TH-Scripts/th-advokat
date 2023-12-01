@@ -10,7 +10,7 @@ function getPlayers()
                 local jobName = ESX.PlayerData.job.label 
                 table.insert(elements, {
                     title = 'Borger id: '..players[i].source,
-                    description = 'Fornavn: '..players[i].firstname.. '\n Efternavn '.. players[i].lastname.. "\nProfession: "..jobName.. "\n Tryk for at ændre personen's navn",
+                    description = 'Fornavn: '..players[i].firstname.. '\n Efternavn '.. players[i].lastname.."\n Tryk for at ændre personen's navn",
                     icon = 'hashtag',
                     onSelect = function()
                         changesSomKanForetages(playerId)
