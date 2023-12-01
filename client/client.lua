@@ -7,9 +7,10 @@ function getPlayers()
         for i=1, #players, 1 do
             if players[i].name ~= GetPlayerName(PlayerId()) then
                 local playerId= players[i].source
+                local jobName = ESX.PlayerData.job.label 
                 table.insert(elements, {
                     title = 'Borger id: '..players[i].source,
-                    description = 'Fornavn: '..players[i].firstname.. '\n Efternavn '.. players[i].lastname.. '\n Telefonnummer: '..players[i].phoneNumber.. "\n Tryk for at ændre personen's navn",
+                    description = 'Fornavn: '..players[i].firstname.. '\n Efternavn '.. players[i].lastname.. "\nProfession: "..jobName.. "\n Tryk for at ændre personen's navn",
                     icon = 'hashtag',
                     onSelect = function()
                         changesSomKanForetages(playerId)
@@ -56,14 +57,6 @@ function changesSomKanForetages(playerId)
             icon = 'car',
             onSelect = function()
                 getVehicleMenu(playerId)
-            end
-          },
-          {
-            title = 'Giv en faktura',
-            description = 'Tryk for at give en faktura',
-            icon = 'file-invoice',
-            onSelect = function()
-                givebill(playerId)
             end
           }
         }
