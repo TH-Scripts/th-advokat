@@ -69,13 +69,14 @@ end)
 
 RegisterNetEvent('th-advokat:EditCase', function(desc, id)
     local xPlayer = ESX.GetPlayerFromId(source)
+    print(desc)
 
-    MySQL.Async.execute('UPDATE advokat_sager SET `beskrivelse` = @desc WHERE id = @id', {
-        ['@desc'] = desc
+    MySQL.update.await('UPDATE advokat_sager SET beskrivelse = ? WHERE id = ?', {
+        desc, id
     })
 
-    MySQL.Async.execute('UPDATE advokat_sager SET `underskrift` = @underskrift WHERE id = @id', {
-        ['@underskrift'] = xPlayer.getName()
+    MySQL.update.await('UPDATE advokat_sager SET underskrift = ? WHERE id = ?', {
+        ESX.getName(), id
     })
 end)
 
