@@ -154,12 +154,3 @@ Citizen.CreateThread(function()
         Citizen.Wait(10000)
     end
 end)
-
-function givebill()
-    local input = lib.inputDialog('Giv en faktura', {
-        {type = 'number', label = 'Pris', description = 'Angiv størrelsen på fakturaen', required = true},
-        {type = 'number', label = 'Id', description = 'Angiv IDet på den person du gerne vil sende en faktura til', required = true}
-    })
-
-    TriggerServerEvent('esx_billing:sendBill', input[2], '', '', input[1])
-end
