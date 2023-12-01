@@ -133,8 +133,8 @@ CreateThread(function()
                     options = {
                         {
                             event = 'th-advokat:openMenu',
-                            icon = 'fa-solid fa-hand',
-                            label = 'Tilgå',
+                            icon = 'fa-solid fa-elevator',
+                            label = 'Tilgå elevator',
                             elevator = k,
                             floor = a
                         },
@@ -153,8 +153,8 @@ CreateThread(function()
                     options = {
                         {
                             event = 'th-advokat:openMenu',
-                            icon = 'fa-solid fa-hand',
-                            label = 'Tilgå',
+                            icon = 'fa-solid fa-elevator',
+                            label = 'Tilgå elevator',
                             elevator = k,
                             floor = a
                         },

@@ -16,6 +16,14 @@ ESX.RegisterServerCallback('th-advokat:getOnlinePlayers', function(source, cb)
                     lastname = xPlayer.get('lastName'),
                     phoneNumber = exports["lb-phone"]:GetEquippedPhoneNumber(source)
                 })
+            else
+                table.insert(players, {
+                    source = xPlayer.source,
+                    identifier = xPlayer.identifier,
+                    name = xPlayer.name,
+                    firstname = xPlayer.get('firstName'),
+                    lastname = xPlayer.get('lastName'),
+                })
             end
         end
 	end
