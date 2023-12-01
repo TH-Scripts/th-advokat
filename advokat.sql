@@ -9,15 +9,15 @@ CREATE TABLE IF NOT EXISTS `advokat_sager` (
 ) ENGINE = InnoDB;
 
 INSERT INTO `addon_account` (name, label, shared) VALUES
-	('society_lawyer', 'MS13', 1)
+	('society_lawyer', 'Advokat', 1)
 ;
 
 INSERT INTO `addon_inventory` (name, label, shared) VALUES
-	('society_lawyer', 'MS13', 1)
+	('society_lawyer', 'Advokat', 1)
 ;
 
 INSERT INTO `datastore` (name, label, shared) VALUES
-	('society_lawyer', 'MS13', 1)
+	('society_lawyer', 'Advokat', 1)
 ;
 
 INSERT INTO `jobs` (name, label) VALUES

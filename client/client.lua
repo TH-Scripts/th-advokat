@@ -7,10 +7,9 @@ function getPlayers()
         for i=1, #players, 1 do
             if players[i].name ~= GetPlayerName(PlayerId()) then
                 local playerId= players[i].source
-                local jobName = ESX.PlayerData.job.label 
                 table.insert(elements, {
                     title = 'Borger id: '..players[i].source,
-                    description = 'Fornavn: '..players[i].firstname.. '\n Efternavn '.. players[i].lastname.."\n Tryk for at ændre personen's navn",
+                    description = 'Fornavn: '..players[i].firstname.. '\n Efternavn '.. players[i].lastname.."\n Se de ændringer som kan foretages",
                     icon = 'hashtag',
                     onSelect = function()
                         changesSomKanForetages(playerId)
@@ -58,7 +57,15 @@ function changesSomKanForetages(playerId)
             onSelect = function()
                 getVehicleMenu(playerId)
             end
-          }
+          },
+          {
+            title = 'Faktura',
+            description = 'Giv en faktura',
+            icon = 'file-invoice',
+            onSelect = function()
+                givebill(playerId)
+            end
+          },
         }
       })
       lib.showContext('player_foretages')
@@ -85,7 +92,7 @@ function getVehicleMenu(playerId)
             table.insert(elements, {
                 title = 'Ingen køretøjer fundet',
                 description = 'Ingen køretøjer er tilgængelige for denne spiller',
-                icon = 'clipboard'
+                icon = 'circle-xmark'
             })
         end
 
@@ -103,6 +110,10 @@ function getVehicleMenu(playerId)
 
      end, myArgument)
 end
+
+RegisterCommand('openboss', function()
+    TriggerEvent('esx_society:openBossMenu', 'lawyer')
+end)
 
 function navnSkiftDialog(playerId)
 
@@ -126,8 +137,9 @@ function navnSkiftDialog(playerId)
         
         local firstName  = input[1]
         local lastName   = input[2]
-    
+
         TriggerServerEvent('th-advokat:changeName', firstName, lastName, playerId)
+
     else
         lib.showContext('player_foretages')
         lib.notify({

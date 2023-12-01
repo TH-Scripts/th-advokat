@@ -19,21 +19,47 @@ function GetCases()
         options = {}
         options2 = {}
         for _,v in pairs(data) do
+            sagId = v.id
             table.insert(options, {
                 title = 'SagsID: ' ..v.id .. '',
                 description = "FULDE NAVN: \n" .. v.clientname .. '\n\n BESKRIVELSE: \n' .. v.beskrivelse .. '\n\n ADVOKAT: \n' .. v.underskrift .. '\n\n DATO: \n' .. v.dato .. '\n\n Tryk for at ændre sagens indhold',
                 onSelect = function()
-                    deletecase(v.id)
+                    lib.showContext('advokatsag_menu')
                 end
             })
         end
+
+        lib.registerContext({
+            id = 'advokatsag_menu',
+            title = 'Advokat Sag',
+            menu = 'sager',
+            onBack = function()
+            end,
+            options = {
+              {
+                title = 'Beskrivelse',
+                description = 'Ændre sagens beskrivelse',
+                icon = 'comment',
+                onSelect = function()
+                    deletecase(sagId)
+                end
+              },
+              {
+                title = 'Fjern',
+                description = 'Fjern denne sag',
+                icon = 'circle-minus',
+                onSelect = function()
+                    TriggerServerEvent('th-advokat:removeCase', sagId)
+                end
+              }
+            }
+          })
 
         lib.registerContext({
             id = 'sager',
             title = 'Advokat Sager',
             menu = 'advokat_sager',
             onBack = function()
-    
             end,
             options = options,
         })
@@ -41,6 +67,7 @@ function GetCases()
         lib.showContext('sager')
     end)
 end
+
 
 function deletecase(id)
     local input = lib.inputDialog("Ændre sagen med id'et ".. id .. "", {
@@ -55,5 +82,5 @@ function givebill(playerId)
         {type = 'number', label = 'Pris', description = 'Angiv størrelsen på fakturaen', required = true},
     })
 
-    TriggerServerEvent('esx_billing:sendBill', input[1], '', 'Advokat Transaktion', playerId)
+    TriggerServerEvent('esx_billing:sendBill', playerId, 'society_lawyer', 'Advokat Transaktion', input[1])
 end

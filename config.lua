@@ -9,6 +9,7 @@ Config.FrontTarget = vec3(-1570.7935, -574.9966, 108.5228)
 Config.LBPhone = true
 
 Config.AdvokatJob = 'lawyer'
+Config.AmountToPay = 5000
 
 
 Config.Elevators = {

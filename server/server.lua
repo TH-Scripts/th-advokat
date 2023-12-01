@@ -1,4 +1,5 @@
 ESX = exports["es_extended"]:getSharedObject()
+TriggerEvent('esx_society:registerSociety', 'lawyer', 'lawyer', 'society_lawyer', 'society_lawyer', 'society_lawyer', {type = 'public'})
 
 ESX.RegisterServerCallback('th-advokat:getOnlinePlayers', function(source, cb)
 	local xPlayers = ESX.GetPlayers()
@@ -64,6 +65,7 @@ RegisterNetEvent('th-advokat:changeName', function(firstName, lastName, playerId
 
 end)
 
+
 ESX.RegisterServerCallback('th-advokat:getVehicles', function(source, cb, myArgument)
     local xPlayer = ESX.GetPlayerFromId(myArgument)
 
@@ -75,6 +77,8 @@ ESX.RegisterServerCallback('th-advokat:getVehicles', function(source, cb, myArgu
 end)
 
 
+
+
 RegisterNetEvent('th-advokat:EditCase', function(desc, id)
     local xPlayer = ESX.GetPlayerFromId(source)
     print(desc)
@@ -84,7 +88,7 @@ RegisterNetEvent('th-advokat:EditCase', function(desc, id)
     })
 
     MySQL.update.await('UPDATE advokat_sager SET underskrift = ? WHERE id = ?', {
-        ESX.getName(), id
+        xPlayer.getName(), id
     })
 end)
 
@@ -95,6 +99,14 @@ RegisterNetEvent('th-advokat:CreateCase', function(id, desc, name, check, date)
 
     MySQL.insert.await('INSERT INTO `advokat_sager` (id, clientname, beskrivelse, underskrift, dato) VALUES (?, ?, ?, ?, ?)', {
         id, desc, name, name2, date
+    })
+end)
+
+RegisterNetEvent('th-advokat:removeCase', function(sagId)
+    local id = sagId
+
+    MySQL.Async.execute('DELETE FROM advokat_sager WHERE id = @id', {
+        ['@id'] = id,
     })
 end)
 
