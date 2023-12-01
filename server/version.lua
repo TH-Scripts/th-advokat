@@ -1,0 +1,1 @@
+lib.versionCheck('TH-Scripts/th-advokat')
