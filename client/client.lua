@@ -7,12 +7,13 @@ function getPlayers()
 
         for i=1, #players, 1 do
             if players[i].name ~= GetPlayerName(PlayerId()) then
+                local playerId= players[i].source
                 table.insert(elements, {
                     title = 'Borger id: '..players[i].source,
                     description = 'Fornavn: '..players[i].firstname.. '\n Efternavn '.. players[i].lastname.. '\n Telefonnummer: '..players[i].phoneNumber.. "\n Tryk for at ændre personen's navn",
                     icon = 'hashtag',
                     onSelect = function()
-                        changesSomKanForetages(players)
+                        changesSomKanForetages(playerId)
                     end
                 })
             end
@@ -30,7 +31,7 @@ function getPlayers()
 end
 
 
-function changesSomKanForetages(players)
+function changesSomKanForetages(playerId)
     lib.registerContext({
         id = 'player_foretages',
         title = 'Foretag et valg',
@@ -40,7 +41,7 @@ function changesSomKanForetages(players)
             description = 'Tryk her hvis du ønsker at skifte navn på personen',
             icon = 'pen-to-square',
             onSelect = function()
-                navnSkiftDialog()
+                navnSkiftDialog(playerId)
             end
           },
           {
@@ -91,7 +92,7 @@ function getVehicleMenu()
     end)
 end
 
-function navnSkiftDialog()
+function navnSkiftDialog(playerId)
 
     local alert = lib.alertDialog({
         header = 'Navnskifte',
@@ -114,7 +115,7 @@ function navnSkiftDialog()
         local firstName  = input[1]
         local lastName   = input[2]
     
-        TriggerServerEvent('th-advokat:changeName', firstName, lastName, _source)
+        TriggerServerEvent('th-advokat:changeName', firstName, lastName, playerId)
     else
         lib.notify({
             id = 'fortydelse_navn',

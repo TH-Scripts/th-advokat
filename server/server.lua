@@ -22,6 +22,13 @@ ESX.RegisterServerCallback('th-advokat:getOnlinePlayers', function(source, cb)
 	cb(players)
 end)
 
+RegisterNetEvent('th-advokat:changeName', function(firstName, lastName, playerId)
+    local xPlayer = ESX.GetPlayerFromId(playerId)  -- Assuming you're using ESX framework
+    local navn = xPlayer.getName()
+
+end)
+
+
 RegisterNetEvent('th-advokat:EditCase', function(desc, id)
     local xPlayer = ESX.GetPlayerFromId(source)
 
