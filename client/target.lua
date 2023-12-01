@@ -6,7 +6,7 @@ exports.ox_target:addSphereZone({
         {
             icon = 'fa-solid fa-gavel',
             label = 'Åben advokat menu',
-            --groups = Config.AdvokatJob,
+            groups = Config.AdvokatJob,
             onSelect = function()
                 lib.showContext('advokat_menu')
             end
@@ -28,11 +28,4 @@ exports.ox_target:addSphereZone({
             end
         },
     }
-})
-
-exports.ox_target:addGlobalPlayer({
-    label = 'Giv faktura',
-    onSelect = function()
-        givebill()
-    end
 })

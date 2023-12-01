@@ -50,11 +50,10 @@ function deletecase(id)
     TriggerServerEvent('th-advokat:EditCase', input[1], id)
 end
 
-function givebill()
+function givebill(playerId)
     local input = lib.inputDialog('Giv en faktura', {
         {type = 'number', label = 'Pris', description = 'Angiv størrelsen på fakturaen', required = true},
-        {type = 'number', label = 'Id', description = 'Angiv IDet på den person du gerne vil sende en faktura til', required = true}
     })
 
-    TriggerServerEvent('esx_billing:sendBill', input[2], '', '', input[1])
+    TriggerServerEvent('esx_billing:sendBill', input[1], '', 'Advokat Transaktion', playerId)
 end

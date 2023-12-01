@@ -8,7 +8,7 @@ Config.PEDModel = 'a_f_y_femaleagent'
 Config.FrontTarget = vec3(-1570.7935, -574.9966, 108.5228)
 Config.LBPhone = true
 
-Config.AdvokatJob = ''
+Config.AdvokatJob = 'lawyer'
 
 
 Config.Elevators = {
