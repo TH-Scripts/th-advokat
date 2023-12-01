@@ -22,6 +22,9 @@ function getPlayers()
         lib.registerContext({
             id = 'list_players',
             title = 'Borgerliste',
+            menu = 'advokat_menu',
+            onBack = function()
+            end,
             options = elements
         })
 
@@ -35,11 +38,15 @@ function changesSomKanForetages(playerId)
     lib.registerContext({
         id = 'player_foretages',
         title = 'Foretag et valg',
+        menu = 'list_players',
+        onBack = function()
+
+        end,
         options = {
           {
             title = 'Skift navn',
             description = 'Tryk her hvis du ønsker at skifte navn på personen',
-            icon = 'pen-to-square',
+            icon = 'file-signature',
             onSelect = function()
                 navnSkiftDialog(playerId)
             end
@@ -47,9 +54,9 @@ function changesSomKanForetages(playerId)
           {
             title = 'Køretøjslist',
             description = 'Tryk her for at få vist køretøjer',
-            icon = 'pen-to-square',
+            icon = 'car',
             onSelect = function()
-                getVehicleMenu()
+                getVehicleMenu(playerId)
             end
           }
         }
@@ -57,39 +64,44 @@ function changesSomKanForetages(playerId)
       lib.showContext('player_foretages')
 end
 
-function getVehicleMenu()
-
-
+function getVehicleMenu(playerId)
+    local myArgument = playerId
     ESX.TriggerServerCallback('th-advokat:getVehicles', function(vehicles) 
-       local elements = {}
-       
-        for i=1, #vehicles, 1 do
-            vehicles[i].vehicle = json.decode(vehicles[i].vehicle)
-            local hashVehicule = vehicles[i].vehicle.model
-            local aheadVehName = GetDisplayNameFromVehicleModel(hashVehicule)
-            local vehicleName = GetLabelText(aheadVehName)
-            if vehicles[i].parked == "1" then
+    local elements = {}
+    
+        if next(vehicles) ~= nil then
+            for i=1, #vehicles, 1 do
+                vehicles[i].vehicle = json.decode(vehicles[i].vehicle)
+                local hashVehicule = vehicles[i].vehicle.model
+                local aheadVehName = GetDisplayNameFromVehicleModel(hashVehicule)
+                local vehicleName = GetLabelText(aheadVehName)
                 table.insert(elements, {
-                    title = vehicleName..' - '..vehicles[i].plate,
-                    description = vehicles[i]
-                })
-            else
-                table.insert(elements, {
-                    title = vehicleName..' - '..vehicles[i].plate,
-                    description = vehicles[i]
+                    title = 'Køretøj '..vehicleName,
+                    description = 'Nummerplade: '..vehicles[i].plate,
+                    icon = 'clipboard'
                 })
             end
+        else
+            table.insert(elements, {
+                title = 'Ingen køretøjer fundet',
+                description = 'Ingen køretøjer er tilgængelige for denne spiller',
+                icon = 'clipboard'
+            })
         end
 
         lib.registerContext({
             id = 'list_vehicles',
             title = 'Køretøjsliste',
+            menu = 'player_foretages',
+            onBack = function()
+
+            end,
             options = elements
         })
 
         lib.showContext('list_vehicles')
 
-    end)
+     end, myArgument)
 end
 
 function navnSkiftDialog(playerId)
@@ -117,6 +129,7 @@ function navnSkiftDialog(playerId)
     
         TriggerServerEvent('th-advokat:changeName', firstName, lastName, playerId)
     else
+        lib.showContext('player_foretages')
         lib.notify({
             id = 'fortydelse_navn',
             title = 'Navnskifte',

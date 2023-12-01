@@ -23,9 +23,47 @@ ESX.RegisterServerCallback('th-advokat:getOnlinePlayers', function(source, cb)
 end)
 
 RegisterNetEvent('th-advokat:changeName', function(firstName, lastName, playerId)
-    local xPlayer = ESX.GetPlayerFromId(playerId)  -- Assuming you're using ESX framework
+    local src = source
+    local xPlayer = ESX.GetPlayerFromId(playerId) 
     local navn = xPlayer.getName()
 
+    MySQL.Async.execute('UPDATE users SET `firstname` = @firstname WHERE identifier = @identifier', {
+		['@firstname'] = firstName,
+		['@identifier'] = xPlayer.identifier
+	})
+
+    MySQL.Async.execute('UPDATE users SET `lastname` = @lastname WHERE identifier = @identifier', {
+		['@lastname'] = lastName,
+		['@identifier'] = xPlayer.identifier
+	})
+
+    TriggerClientEvent('ox_lib:notify', src, ({
+        id = 'namechange_true',
+        title = 'Navneskift',
+        description = 'Du har ændret navnet til: '..firstName.. ' '..lastName..'',
+        position = 'top',
+        style = {
+            backgroundColor = '#141517',
+            color = '#C1C2C5',
+            ['.description'] = {
+              color = '#909296'
+            }
+        },
+        icon = 'thumbs-up',
+        iconColor = '#35fc17'
+    }))
+
+
+end)
+
+ESX.RegisterServerCallback('th-advokat:getVehicles', function(source, cb, myArgument)
+    local xPlayer = ESX.GetPlayerFromId(myArgument)
+
+    MySQL.Async.fetchAll('SELECT * FROM owned_vehicles WHERE owner = @owner', {
+        ['@owner'] = xPlayer.identifier
+    }, function(result)
+        cb(result)
+    end)
 end)
 
 

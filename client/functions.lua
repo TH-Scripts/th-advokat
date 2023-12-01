@@ -31,6 +31,10 @@ function GetCases()
         lib.registerContext({
             id = 'sager',
             title = 'Advokat Sager',
+            menu = 'advokat_sager',
+            onBack = function()
+    
+            end,
             options = options,
         })
 
