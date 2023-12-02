@@ -1,35 +1,33 @@
 ESX = exports["es_extended"]:getSharedObject()
 TriggerEvent('esx_society:registerSociety', 'lawyer', 'lawyer', 'society_lawyer', 'society_lawyer', 'society_lawyer', {type = 'public'})
 
-ESX.RegisterServerCallback('th-advokat:getOnlinePlayers', function(source, cb)
-	local xPlayers = ESX.GetPlayers()
+ESX.RegisterServerCallback('th-advokat:getOnlinePlayers', function(source, cb, closePlayer)
+	local xPlayer = ESX.GetPlayerFromId(closePlayer)
 	local players = {}
 
-	for i=1, #xPlayers, 1 do
-		local xPlayer = ESX.GetPlayerFromId(xPlayers[i])
-        if xPlayer.get('firstName') then
-            if Config.LBPhone then
-                table.insert(players, {
-                    source = xPlayer.source,
-                    identifier = xPlayer.identifier,
-                    name = xPlayer.name,
-                    firstname = xPlayer.get('firstName'),
-                    lastname = xPlayer.get('lastName'),
-                    phoneNumber = exports["lb-phone"]:GetEquippedPhoneNumber(source)
-                })
-            else
-                table.insert(players, {
-                    source = xPlayer.source,
-                    identifier = xPlayer.identifier,
-                    name = xPlayer.name,
-                    firstname = xPlayer.get('firstName'),
-                    lastname = xPlayer.get('lastName'),
-                })
-            end
+    if xPlayer.get('firstName') then
+        if Config.LBPhone then
+            table.insert(players, {
+                source = xPlayer.source,
+                identifier = xPlayer.identifier,
+                name = xPlayer.name,
+                firstname = xPlayer.get('firstName'),
+                lastname = xPlayer.get('lastName'),
+                phoneNumber = exports["lb-phone"]:GetEquippedPhoneNumber(source)
+            })
+        else
+            table.insert(players, {
+                source = xPlayer.source,
+                identifier = xPlayer.identifier,
+                name = xPlayer.name,
+                firstname = xPlayer.get('firstName'),
+                lastname = xPlayer.get('lastName'),
+            })
         end
-	end
+    end
 	cb(players)
 end)
+
 
 RegisterNetEvent('th-advokat:changeName', function(firstName, lastName, playerId)
     local src = source

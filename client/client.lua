@@ -2,6 +2,10 @@ ESX = exports["es_extended"]:getSharedObject()
 
 
 function getPlayers()
+    
+    local closestPlayer = ESX.Game.GetClosestPlayer()
+    local closePlayer = GetPlayerServerId(closestPlayer)
+
     ESX.TriggerServerCallback('th-advokat:getOnlinePlayers', function(players)
         local elements = {}
         for i=1, #players, 1 do
@@ -12,7 +16,9 @@ function getPlayers()
                     description = 'Fornavn: '..players[i].firstname.. '\n Efternavn '.. players[i].lastname.."\n Se de ændringer som kan foretages",
                     icon = 'hashtag',
                     onSelect = function()
-                        changesSomKanForetages(playerId)
+                        local playerfirstName = players[i].firstname
+                        local lastNamePlayer = players[i].lastname
+                        changesSomKanForetages(playerId, playerfirstName, lastNamePlayer)
                     end
                 })
             end
@@ -29,14 +35,14 @@ function getPlayers()
 
         lib.showContext('list_players')
 
-    end)
+    end, closePlayer)
 end
 
 
-function changesSomKanForetages(playerId)
+function changesSomKanForetages(playerId, playerfirstName, lastNamePlayer)
     lib.registerContext({
         id = 'player_foretages',
-        title = 'Foretag et valg',
+        title = 'Borger: '..playerfirstName.. ' '..lastNamePlayer,
         menu = 'list_players',
         onBack = function()
 
@@ -123,7 +129,7 @@ function navnSkiftDialog(playerId)
         centered = true,
         cancel = true,
         labels = {
-            confirm = 'Ja, ændre navn',
+            confirm = 'Ja',
             cancel = 'Fortryd',
         }
     })
@@ -138,7 +144,23 @@ function navnSkiftDialog(playerId)
         local firstName  = input[1]
         local lastName   = input[2]
 
-        TriggerServerEvent('th-advokat:changeName', firstName, lastName, playerId)
+        local alert = lib.alertDialog({
+            header = 'Ændre navnet',
+            content = "Er du sikker på, at du gerne vile ændre navnet til "..firstName.. ' '..lastName..'',
+            centered = true,
+            cancel = true,
+            labels = {
+                confirm = 'Ja, ændre navn',
+                cancel = 'Fortryd',
+            }
+        })
+
+        if alert == 'confirm' then
+            TriggerServerEvent('th-advokat:changeName', firstName, lastName, playerId)
+            TriggerServerEvent('th-advokat:fjernPenge')
+        else
+            lib.showContext('player_foretages')
+        end
 
     else
         lib.showContext('player_foretages')
@@ -159,6 +181,7 @@ function navnSkiftDialog(playerId)
         })
     end
 end
+
 
 spawnped = false
 
