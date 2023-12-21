@@ -1,12 +1,14 @@
 Config = {}
 
-Config.target = vec3(-1556.65, -575.87, 108.53)
-Config.PEDSpawn = vec4(-1570.7935, -574.9966, 108.5228-1, 37.4979)
-
-Config.PEDModel = 'a_f_y_femaleagent'
+Config.Debug = false
 
 Config.FrontTarget = vec3(-1570.7935, -574.9966, 108.5228)
-Config.LBPhone = true
+Config.JobTarget = vec3(-1556.65, -575.87, 108.53)
+
+Config.PedSpawn = vec4(-1570.7935, -574.9966, 108.5228 - 1, 37.4979)
+Config.PedModel = 'a_f_y_femaleagent'
+
+Config.LBPhone = false
 
 Config.AdvokatJob = 'lawyer'
 Config.AmountToPay = 5000
@@ -17,7 +19,7 @@ Config.Elevators = {
         [1] = {
             coords = vec3(-1579.6760, -561.1122, 108.5229),
             heading = 300.8177,
-            title = 'Advokat Kontor', 
+            title = 'Advokat Kontor',
             description = 'Tilgå advokat kontoret',
             target = {
                 width = 5,
@@ -30,8 +32,8 @@ Config.Elevators = {
             title = 'Udgang',
             description = 'Tilgå udgangen',
             target = {
-            width = 5,
-            length = 4
+                width = 5,
+                length = 4
             }
         },
     },

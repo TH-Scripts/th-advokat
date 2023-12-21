@@ -1,7 +1,8 @@
 exports.ox_target:addSphereZone({
-    coords = Config.target,
+    coords = Config.JobTarget,
     radius = 1,
-    debug = drawZones,
+    debug = Config.Debug,
+    drawSprite = true,
     options = {
         {
             icon = 'fa-solid fa-gavel',
@@ -14,18 +15,20 @@ exports.ox_target:addSphereZone({
     }
 })
 
-exports.ox_target:addSphereZone({
-    coords = Config.FrontTarget,
-    radius = 1,
-    debug = drawZones,
-    options = {
-        {
-            icon = 'fa-solid fa-gavel',
-            label = 'Tilkald En Advokat',
-            --groups = Config.AdvokatJob,
-            onSelect = function()
-                callLawyer()
-            end
-        },
-    }
-})
+if Config.LBPhone then
+    exports.ox_target:addSphereZone({
+        coords = Config.FrontTarget,
+        radius = 1,
+        debug = Config.Debug,
+        drawSprite = true,
+        options = {
+            {
+                icon = 'fa-solid fa-gavel',
+                label = 'Tilkald En Advokat',
+                onSelect = function()
+                    CallLawyer()
+                end
+            },
+        }
+    })
+end

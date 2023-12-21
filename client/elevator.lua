@@ -17,7 +17,7 @@ CreateThread(function()
             PlayerData = ESX.GetPlayerData()
         end
 
-        RegisterNetEvent('esx:setJob',  function(job)
+        RegisterNetEvent('esx:setJob', function(job)
             PlayerData.job = job
         end)
     elseif framework == 'qb' then
@@ -46,18 +46,18 @@ AddEventHandler('th-advokat:goToFloor', function(data)
     local coords = Config.Elevators[elevator][floor].coords
     local heading = Config.Elevators[elevator][floor].heading
     local ped = cache.ped
-	DoScreenFadeOut(1500)
-	while not IsScreenFadedOut() do
-		Wait(10)
-	end
-	RequestCollisionAtCoord(coords.x, coords.y, coords.z)
-	while not HasCollisionLoadedAroundEntity(ped) do
-		Wait()
-	end
-	SetEntityCoords(ped, coords.x, coords.y, coords.z, false, false, false, false)
-	SetEntityHeading(ped, heading and heading or 0.0)
-	Wait(3000)
-	DoScreenFadeIn(1500)
+    DoScreenFadeOut(1500)
+    while not IsScreenFadedOut() do
+        Wait(10)
+    end
+    RequestCollisionAtCoord(coords.x, coords.y, coords.z)
+    while not HasCollisionLoadedAroundEntity(ped) do
+        Wait(1)
+    end
+    SetEntityCoords(ped, coords.x, coords.y, coords.z, false, false, false, false)
+    SetEntityHeading(ped, heading and heading or 0.0)
+    Wait(3000)
+    DoScreenFadeIn(1500)
 end)
 
 AddEventHandler('th-advokat:openMenu', function(data)
@@ -66,16 +66,16 @@ AddEventHandler('th-advokat:openMenu', function(data)
     local elevatorData = Config.Elevators[elevator]
     local Options = {}
 
-    for k,v in pairs(elevatorData) do
+    for k, v in pairs(elevatorData) do
         if k == floor then
             table.insert(Options, {
-                title = v.title..' (Nuværende)',
+                title = v.title .. ' (Nuværende)',
                 description = v.description,
                 event = '',
             })
         elseif v.groups then
             local found
-            for i=1, #v.groups do
+            for i = 1, #v.groups do
                 if PlayerData.job.name == v.groups[i] then
                     found = true
                 end
@@ -110,57 +110,57 @@ AddEventHandler('th-advokat:openMenu', function(data)
         end
     end
     lib.registerContext({
-		id = 'elevator_menu',
-		title = 'Elevator Menu',
-		options = Options
-	})
+        id = 'elevator_menu',
+        title = 'Elevator Menu',
+        options = Options
+    })
 
-	lib.showContext('elevator_menu')
+    lib.showContext('elevator_menu')
 end)
 
 CreateThread(function()
-    for k,v in pairs(Config.Elevators) do
-        for a,b in pairs(Config.Elevators[k]) do
+    for k, v in pairs(Config.Elevators) do
+        for a, b in pairs(Config.Elevators[k]) do
             if b.groups then
-                exports[target]:AddBoxZone(k..':'..a, b.coords, b.target.width, b.target.length, {
-                    name = k..':'..a,
-                    heading = b.target.heading,
-                    debugPoly = false,
-                    minZ = b.coords.z - 1.5,
-                    maxZ = b.coords.z + 1.5
-                },
-                {
-                    options = {
-                        {
-                            event = 'th-advokat:openMenu',
-                            icon = 'fa-solid fa-elevator',
-                            label = 'Tilgå elevator',
-                            elevator = k,
-                            floor = a
-                        },
+                exports[target]:AddBoxZone(k .. ':' .. a, b.coords, b.target.width, b.target.length, {
+                        name = k .. ':' .. a,
+                        heading = b.target.heading,
+                        debugPoly = false,
+                        minZ = b.coords.z - 1.5,
+                        maxZ = b.coords.z + 1.5
                     },
-                    distance = 1.5 
-                })
+                    {
+                        options = {
+                            {
+                                event = 'th-advokat:openMenu',
+                                icon = 'fa-solid fa-elevator',
+                                label = 'Tilgå elevator',
+                                elevator = k,
+                                floor = a
+                            },
+                        },
+                        distance = 1.5
+                    })
             else
-                exports[target]:AddBoxZone(k..':'..a, b.coords, b.target.width, b.target.length, {
-                    name = k..':'..a,
-                    heading = b.target.heading,
-                    debugPoly = false,
-                    minZ = b.coords.z - 1.5,
-                    maxZ = b.coords.z + 1.5
-                },
-                {
-                    options = {
-                        {
-                            event = 'th-advokat:openMenu',
-                            icon = 'fa-solid fa-elevator',
-                            label = 'Tilgå elevator',
-                            elevator = k,
-                            floor = a
-                        },
+                exports[target]:AddBoxZone(k .. ':' .. a, b.coords, b.target.width, b.target.length, {
+                        name = k .. ':' .. a,
+                        heading = b.target.heading,
+                        debugPoly = false,
+                        minZ = b.coords.z - 1.5,
+                        maxZ = b.coords.z + 1.5
                     },
-                    distance = 1.5
-                })
+                    {
+                        options = {
+                            {
+                                event = 'th-advokat:openMenu',
+                                icon = 'fa-solid fa-elevator',
+                                label = 'Tilgå elevator',
+                                elevator = k,
+                                floor = a
+                            },
+                        },
+                        distance = 1.5
+                    })
             end
         end
     end
