@@ -1,30 +1,30 @@
 lib.registerContext({
-    id = 'advokat_menu',
-    title = 'Advokat Menu',
-    options = {
-      {
-        title = 'Liste over borgere',
-        description = "Få en liste over alle de borgere, som befinder sig i byen",
-        icon = 'pen-to-square',
-        onSelect = function()
-          getPlayers()
-        end
-      },
-      -- {
-      --   title = 'Køretøjer',
-      --   description = 'Se handlinger vedr. køretøjer for borgere',
-      --   icon = 'car-side',
-      --   onSelect = function()
-      --     inputVehiclePlayerID()
-      --   end
-      -- },
-      {
-        title = 'Advokat sager',
-        description = 'Se/opret advokat sager',
-        icon = 'folder',
-        menu = 'advokat_sager'
-      }
+  id = 'advokat_menu',
+  title = 'Advokat Menu',
+  options = {
+    {
+      title = 'Liste over borgere',
+      description = "Få en liste over borgere i nærheden",
+      icon = 'pen-to-square',
+      onSelect = function()
+        GetPlayers()
+      end
+    },
+    -- {
+    --   title = 'Køretøjer',
+    --   description = 'Se handlinger vedr. køretøjer for borgere',
+    --   icon = 'car-side',
+    --   onSelect = function()
+    --     inputVehiclePlayerID()
+    --   end
+    -- },
+    {
+      title = 'Advokat sager',
+      description = 'Se/opret advokat sager',
+      icon = 'folder',
+      menu = 'advokat_sager'
     }
+  }
 })
 
 lib.registerContext({
@@ -52,5 +52,3 @@ lib.registerContext({
     }
   }
 })
-
-
